@@ -14,7 +14,7 @@ if "counter" not in st.session_state:
 
 with st.form("invoice_form"):
 
-    invoice_number_input = st.text_input("Invoice Number (optional)")
+    invoice_number_input = st.text_input("Invoice Number (DD#01-2026)")
 
     bill_to = st.text_input("Bill To")
     club_name = st.text_input("Club Name")
