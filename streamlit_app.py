@@ -28,7 +28,7 @@ with st.form("invoice_form"):
 
 if submit:
 
-    rate = 150000
+    rate = 20000
     total = members * rate
 
     if invoice_number_input != "":
