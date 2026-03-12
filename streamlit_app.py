@@ -1,4 +1,3 @@
-
 import streamlit as st
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
@@ -6,88 +5,136 @@ from reportlab.lib.units import cm
 from reportlab.lib import colors
 from io import BytesIO
 
-st.set_page_config(page_title="Rotaract District Invoice Generator", layout="centered")
+st.set_page_config(page_title="Rotaract Invoice Generator")
 
-st.title("Rotaract District Dues Invoice Generator")
+st.title("Rotaract District Dues Invoice")
 
-# initialize invoice counter
-if "invoice_counter" not in st.session_state:
-    st.session_state.invoice_counter = 1
+if "counter" not in st.session_state:
+    st.session_state.counter = 1
 
 with st.form("invoice_form"):
+
+    invoice_number_input = st.text_input("Invoice Number (optional)")
+
     bill_to = st.text_input("Bill To")
     club_name = st.text_input("Club Name")
+
     invoice_date = st.date_input("Invoice Date")
     payment_due = st.date_input("Payment Due")
-    members = st.number_input("Jumlah Member", min_value=1, step=1)
-    rate = st.number_input("Dues per Member (Rp)", value=150000)
 
-    submitted = st.form_submit_button("Generate Invoice")
+    members = st.number_input("Jumlah Member", min_value=1)
 
-if submitted:
-    invoice_no = f"DD#{st.session_state.invoice_counter:02d}-2026"
+    submit = st.form_submit_button("Generate Invoice")
+
+if submit:
+
+    rate = 150000
     total = members * rate
 
-    st.session_state.invoice_counter += 1
+    if invoice_number_input != "":
+        invoice_number = invoice_number_input
+    else:
+        invoice_number = f"DD#{st.session_state.counter:02d}-2026"
+        st.session_state.counter += 1
 
-    st.success(f"Invoice Generated: {invoice_no}")
+    st.session_state.invoice = {
+        "invoice_number": invoice_number,
+        "bill_to": bill_to,
+        "club_name": club_name,
+        "invoice_date": invoice_date,
+        "payment_due": payment_due,
+        "members": members,
+        "rate": rate,
+        "total": total
+    }
+
+if "invoice" in st.session_state:
+
+    data = st.session_state.invoice
+
+    st.markdown("---")
 
     st.subheader("Invoice Preview")
 
-    st.write(f"**Bill To:** {bill_to}")
-    st.write(f"**Club:** {club_name}")
-    st.write(f"**Invoice Date:** {invoice_date}")
-    st.write(f"**Payment Due:** {payment_due}")
+    col1, col2 = st.columns(2)
 
-    st.table({
-        "Description":["Annual Rotaract Dues"],
-        "Qty":[members],
-        "Rate":[f"Rp {rate:,.0f}"],
-        "Amount":[f"Rp {total:,.0f}"]
-    })
+    with col1:
+        st.write("**Bill To**")
+        st.write(data["bill_to"])
+        st.write(data["club_name"])
 
-    st.write(f"### Total Due: Rp {total:,.0f}")
+    with col2:
+        st.write(f"**Invoice #:** {data['invoice_number']}")
+        st.write(f"Invoice Date: {data['invoice_date']}")
+        st.write(f"Payment Due: {data['payment_due']}")
+
+    st.markdown("### ")
+
+    table = {
+        "Description": ["Annual Rotaract Dues"],
+        "Qty": [data["members"]],
+        "Rate": [f"Rp {data['rate']:,}"],
+        "Amount": [f"Rp {data['total']:,}"]
+    }
+
+    st.table(table)
+
+    st.write("Subtotal:", f"Rp {data['total']:,}")
+    st.write("Tax (0%): Rp 0")
+    st.write("### Total Due:", f"Rp {data['total']:,}")
+
+    st.markdown("### Payment Information")
+
+    st.write("Bank: Jago")
+    st.write("Account Holder: Juvenus")
+    st.write("Account Number: 101682490106")
+
+    st.markdown("Thank you for your commitment!")
 
     if st.button("Generate PDF"):
 
         buffer = BytesIO()
-        doc = SimpleDocTemplate(buffer, pagesize=(21*cm, 29.7*cm))
+
+        doc = SimpleDocTemplate(buffer, pagesize=(21*cm,29.7*cm))
 
         styles = getSampleStyleSheet()
 
         elements = []
 
-        elements.append(Paragraph("Rotaract Club - District Dues Invoice", styles["Title"]))
-        elements.append(Spacer(1,12))
-
-        elements.append(Paragraph(f"Invoice Number: {invoice_no}", styles["Normal"]))
-        elements.append(Paragraph(f"Bill To: {bill_to}", styles["Normal"]))
-        elements.append(Paragraph(f"Club: {club_name}", styles["Normal"]))
-        elements.append(Paragraph(f"Invoice Date: {invoice_date}", styles["Normal"]))
-        elements.append(Paragraph(f"Payment Due: {payment_due}", styles["Normal"]))
+        elements.append(Paragraph("Rotaract Club - Club Dues Invoice", styles["Title"]))
 
         elements.append(Spacer(1,20))
 
-        data = [
+        elements.append(Paragraph(f"Invoice #: {data['invoice_number']}", styles["Normal"]))
+        elements.append(Paragraph(f"Bill To: {data['bill_to']}", styles["Normal"]))
+        elements.append(Paragraph(f"Club: {data['club_name']}", styles["Normal"]))
+        elements.append(Paragraph(f"Invoice Date: {data['invoice_date']}", styles["Normal"]))
+        elements.append(Paragraph(f"Payment Due: {data['payment_due']}", styles["Normal"]))
+
+        elements.append(Spacer(1,20))
+
+        pdf_table = Table([
             ["Description","Qty","Rate","Amount"],
-            ["Annual Rotaract Dues", members, f"Rp {rate:,.0f}", f"Rp {total:,.0f}"]
-        ]
+            ["Annual Rotaract Dues",
+             data["members"],
+             f"Rp {data['rate']:,}",
+             f"Rp {data['total']:,}"]
+        ])
 
-        table = Table(data)
-
-        table.setStyle(TableStyle([
-            ("BACKGROUND",(0,0),(-1,0),colors.pink),
+        pdf_table.setStyle(TableStyle([
+            ("BACKGROUND",(0,0),(-1,0),colors.lightpink),
             ("GRID",(0,0),(-1,-1),1,colors.grey)
         ]))
 
-        elements.append(table)
+        elements.append(pdf_table)
 
         elements.append(Spacer(1,20))
 
-        elements.append(Paragraph(f"Total Due: Rp {total:,.0f}", styles["Heading2"]))
+        elements.append(Paragraph(f"Total Due: Rp {data['total']:,}", styles["Heading2"]))
+
         elements.append(Spacer(1,20))
 
-        elements.append(Paragraph("Payment Information:", styles["Heading3"]))
+        elements.append(Paragraph("Payment Information", styles["Heading3"]))
         elements.append(Paragraph("Bank: Jago", styles["Normal"]))
         elements.append(Paragraph("Account Holder: Juvenus", styles["Normal"]))
         elements.append(Paragraph("Account Number: 101682490106", styles["Normal"]))
@@ -95,11 +142,10 @@ if submitted:
         doc.build(elements)
 
         pdf = buffer.getvalue()
-        buffer.close()
 
         st.download_button(
-            label="Download PDF",
-            data=pdf,
-            file_name=f"{invoice_no}.pdf",
+            "Download Invoice PDF",
+            pdf,
+            file_name=f"{data['invoice_number']}.pdf",
             mime="application/pdf"
         )
