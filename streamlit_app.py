@@ -116,7 +116,7 @@ if "invoice" in st.session_state:
 
     # alignment
     ("ALIGN",(-1,0),(-1,0),"LEFT"),      # logo kiri
-    ("ALIGN",(0,0),(0,0),"CENTER"),    # title tengah
+    ("ALIGN",(0,0),(0,0),"RIGHT"),    # title tengah
 
     ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
 
