@@ -105,7 +105,7 @@ if "invoice" in st.session_state:
         elements = []
         
         elements.append
-        logo,
+        elements.append logo
         elements.append(Paragraph("Rotaract Club - Club Dues Invoice", styles["Title"]))
 
         elements.append(Spacer(1,20))
