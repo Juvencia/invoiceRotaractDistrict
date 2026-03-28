@@ -6,7 +6,7 @@ from reportlab.lib import colors
 from io import BytesIO
 
 
-logo = Image("assets/Rotaract District 3410 logo-1.png", width=5*cm, height=2.5*cm)
+logo = Image("assets/Rotaract District 3410 logo-1.png", width=5*cm, height=3.5*cm)
 
 st.set_page_config(page_title="Rotaract Invoice Generator")
 
@@ -112,14 +112,29 @@ if "invoice" in st.session_state:
         ], colWidths=[3*cm,11*cm,4*cm])
         
         header.setStyle(TableStyle([
-            ("TEXTCOLOR",(1,0),(2,0),colors.white),
-            ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
-            ("LEFTPADDING",(0,0),(-1,-1),10),
-            ("RIGHTPADDING",(0,0),(-1,-1),15),
-            ("TOPPADDING",(0,0),(-1,-1),12),
-            ("BOTTOMPADDING",(0,0),(-1,-1),12)
+           ("TEXTCOLOR",(1,0),(2,0),colors.white),
+
+    # alignment
+    ("ALIGN",(0,0),(0,0),"LEFT"),      # logo kiri
+    ("ALIGN",(1,0),(1,0),"CENTER"),    # title tengah
+
+    ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+
+    # spacing supaya tidak mepet
+    ("LEFTPADDING",(0,0),(0,0),0),
+    ("RIGHTPADDING",(0,0),(0,0),20),
+
+    ("LEFTPADDING",(1,0),(1,0),20),
+    ("RIGHTPADDING",(1,0),(1,0),20),
+
+    ("LEFTPADDING",(2,0),(2,0),20),
+    ("RIGHTPADDING",(2,0),(2,0),0),
+
+    ("TOPPADDING",(0,0),(-1,-1),15),
+    ("BOTTOMPADDING",(0,0),(-1,-1),15)
         ]))
-        
+
+
         elements.append(header)
 
         elements.append(Spacer(1,20))
