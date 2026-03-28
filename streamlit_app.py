@@ -115,8 +115,8 @@ if "invoice" in st.session_state:
            ("TEXTCOLOR",(1,0),(2,0),colors.white),
 
     # alignment
-    ("ALIGN",(0,0),(0,0),"LEFT"),      # logo kiri
-    ("ALIGN",(1,0),(1,0),"CENTER"),    # title tengah
+    ("ALIGN",(-1,0),(-1,0),"LEFT"),      # logo kiri
+    ("ALIGN",(0,0),(0,0),"CENTER"),    # title tengah
 
     ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
 
