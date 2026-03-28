@@ -6,7 +6,7 @@ from reportlab.lib import colors
 from io import BytesIO
 
 
-logo = Image("assets/rotaract_district_logo.png", width=2.5*cm, height=2.5*cm)
+logo = Image("assets/rotaract_district_logo.png", width=5*cm, height=2.5*cm)
 
 st.set_page_config(page_title="Rotaract Invoice Generator")
 
@@ -103,29 +103,14 @@ if "invoice" in st.session_state:
         styles = getSampleStyleSheet()
 
         elements = []
-        header = Table([
-            [
-                logo,
-                Paragraph("<b>Rotaract District 3410<br/>Club Dues Invoice</b>", styles["Title"]),
-                Paragraph(f"<b>Invoice #</b><br/>{data['invoice_number']}", styles["Normal"])
-            ]
-        ], colWidths=[3*cm,11*cm,4*cm])
-        
-        header.setStyle(TableStyle([
-            ("BACKGROUND",(0,0),(-1,-1),colors.HexColor("#d81b60")),
-            ("TEXTCOLOR",(1,0),(2,0),colors.white),
-            ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
-            ("LEFTPADDING",(0,0),(-1,-1),10)
-        ]))
-        
-        elements.append(header)
         
         elements.append
+        logo,
         elements.append(Paragraph("Rotaract Club - Club Dues Invoice", styles["Title"]))
 
         elements.append(Spacer(1,20))
 
-        elements.append(Paragraph(f"Invoice #: {data['invoice_number']}", styles["Normal"]))
+        elements.append(Paragraph(f"Invoice Number: {data['invoice_number']}", styles["Normal"]))
         elements.append(Paragraph(f"Bill To: {data['bill_to']}", styles["Normal"]))
         elements.append(Paragraph(f"Club: {data['club_name']}", styles["Normal"]))
         elements.append(Paragraph(f"Invoice Date: {data['invoice_date']}", styles["Normal"]))
