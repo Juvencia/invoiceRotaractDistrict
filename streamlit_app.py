@@ -6,7 +6,7 @@ from reportlab.lib import colors
 from io import BytesIO
 
 
-logo = Image("assets/rotaract_district_logo.png", width=5*cm, height=2.5*cm)
+logo = Image("assets/Rotaract District 3410 logo-1.png", width=5*cm, height=2.5*cm)
 
 st.set_page_config(page_title="Rotaract Invoice Generator")
 
