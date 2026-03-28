@@ -114,7 +114,10 @@ if "invoice" in st.session_state:
         header.setStyle(TableStyle([
             ("TEXTCOLOR",(1,0),(2,0),colors.white),
             ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
-            ("LEFTPADDING",(0,0),(-1,-1),10)
+            ("LEFTPADDING",(0,0),(-1,-1),10),
+            ("RIGHTPADDING",(0,0),(-1,-1),15),
+            ("TOPPADDING",(0,0),(-1,-1),12),
+            ("BOTTOMPADDING",(0,0),(-1,-1),12)
         ]))
         
         elements.append(header)
