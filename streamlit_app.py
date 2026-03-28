@@ -103,10 +103,21 @@ if "invoice" in st.session_state:
         styles = getSampleStyleSheet()
 
         elements = []
+
+        header = Table([
+            [
+                logo,
+                Paragraph("<b>Rotaract District 3410<br/>Club Dues Invoice</b>", styles["Title"]),
+            ]
+        ], colWidths=[3*cm,11*cm,4*cm])
         
-        elements.append
-        elements.append logo
-        elements.append(Paragraph("Rotaract Club - Club Dues Invoice", styles["Title"]))
+        header.setStyle(TableStyle([
+            ("TEXTCOLOR",(1,0),(2,0),colors.white),
+            ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+            ("LEFTPADDING",(0,0),(-1,-1),10)
+        ]))
+        
+        elements.append(header)
 
         elements.append(Spacer(1,20))
 
