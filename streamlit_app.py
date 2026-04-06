@@ -127,24 +127,24 @@ if "invoice" in st.session_state:
         ("BOTTOMPADDING",(0,0),(-1,-1),15)
         ]))
 
-    # alignment
-    ("ALIGN",(-1,0),(-1,0),"LEFT"),      # logo kiri
-    ("ALIGN",(0,0),(0,0),"MIDDLE"),    # title tengah
-
-    ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
-
-    # spacing supaya tidak mepet
-    ("LEFTPADDING",(0,0),(0,0),0),
-    ("RIGHTPADDING",(0,0),(0,0),20),
-
-    ("LEFTPADDING",(1,0),(1,0),20),
-    ("RIGHTPADDING",(1,0),(1,0),20),
-
-    ("LEFTPADDING",(2,0),(2,0),20),
-    ("RIGHTPADDING",(2,0),(2,0),0),
-
-    ("TOPPADDING",(0,0),(-1,-1),15),
-    ("BOTTOMPADDING",(0,0),(-1,-1),15)
+        # alignment
+        ("ALIGN",(-1,0),(-1,0),"LEFT"),      # logo kiri
+        ("ALIGN",(0,0),(0,0),"MIDDLE"),    # title tengah
+    
+        ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+    
+        # spacing supaya tidak mepet
+        ("LEFTPADDING",(0,0),(0,0),0),
+        ("RIGHTPADDING",(0,0),(0,0),20),
+    
+        ("LEFTPADDING",(1,0),(1,0),20),
+        ("RIGHTPADDING",(1,0),(1,0),20),
+    
+        ("LEFTPADDING",(2,0),(2,0),20),
+        ("RIGHTPADDING",(2,0),(2,0),0),
+    
+        ("TOPPADDING",(0,0),(-1,-1),15),
+        ("BOTTOMPADDING",(0,0),(-1,-1),15)
         ]))
 
 
