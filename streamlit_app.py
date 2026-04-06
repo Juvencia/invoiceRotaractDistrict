@@ -121,7 +121,6 @@ if "invoice" in st.session_state:
 
         
         header.setStyle(TableStyle([
-            ("BACKGROUND",(0,0),(-1,-1),colors.HexColor("#d81b60")),
             ("TEXTCOLOR",(1,0),(2,0),colors.white),
         
             # alignment
