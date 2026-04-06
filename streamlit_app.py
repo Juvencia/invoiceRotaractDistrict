@@ -105,7 +105,7 @@ if "invoice" in st.session_state:
         elements = []
 
 
-      header = Table([
+        header = Table([
             [
                 logo,
                 Paragraph(
