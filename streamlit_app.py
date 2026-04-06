@@ -105,7 +105,7 @@ if "invoice" in st.session_state:
         elements = []
 
 
-       header = Table([
+      header = Table([
             [
                 logo,
                 Paragraph(
@@ -118,6 +118,7 @@ if "invoice" in st.session_state:
                 )
             ]
         ], colWidths=[4*cm,10*cm,4*cm])
+
         
         header.setStyle(TableStyle([
             ("BACKGROUND",(0,0),(-1,-1),colors.HexColor("#d81b60")),
