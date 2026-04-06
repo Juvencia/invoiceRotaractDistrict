@@ -25,7 +25,7 @@ with st.form("invoice_form"):
     invoice_date = st.date_input("Invoice Date")
     payment_due = st.date_input("Payment Due")
 
-    members = st.number_input("Jumlah Member", min_value=1)
+    members = st.number_input("Jumlah Member", min_value=1, step=1, format="%d")
 
     submit = st.form_submit_button("Generate Invoice")
 
@@ -104,15 +104,28 @@ if "invoice" in st.session_state:
 
         elements = []
 
+
         header = Table([
             [
                 logo,
-                Paragraph("<b>Rotaract District 3410<br/>Club Dues Invoice</b>", styles["Title"]),
+                Paragraph(
+                    "<para align='right'><b>Rotaract District 3410<br/>Club Dues Invoice</b></para>",
+                    styles["Title"]
+                ),
+                Paragraph(
+                    f"<para align='right'><b>Invoice #</b><br/>{data['invoice_number']}</para>",
+                    styles["Normal"]
+                )
             ]
-        ], colWidths=[3*cm,11*cm,4*cm])
+        ], colWidths=[4*cm,10*cm,4*cm])
         
-        header.setStyle(TableStyle([
-           ("TEXTCOLOR",(1,0),(2,0),colors.white),
+       header.setStyle(TableStyle([
+    ("BACKGROUND",(0,0),(-1,-1),colors.HexColor("#d81b60")),
+    ("TEXTCOLOR",(1,0),(2,0),colors.white),
+    ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+    ("TOPPADDING",(0,0),(-1,-1),15),
+    ("BOTTOMPADDING",(0,0),(-1,-1),15)
+    ]))
 
     # alignment
     ("ALIGN",(-1,0),(-1,0),"LEFT"),      # logo kiri
