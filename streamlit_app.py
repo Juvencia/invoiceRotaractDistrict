@@ -153,7 +153,7 @@ if "invoice" in st.session_state:
         elements.append(Paragraph(f"Bill To: {data['bill_to']}", styles["Normal"]))
         elements.append(Paragraph(f"Club: {data['club_name']}", styles["Normal"]))
         elements.append(Paragraph(f"Invoice Date: {data['invoice_date']}", styles["Normal"]))
-        elements.append(Paragraph(f"Payment Due: {data['payment_due']}", styles["Normal"]))
+        elements.append(Paragraph(f"Payment Date: {data['payment_due']}", styles["Normal"]))
 
         elements.append(Spacer(1,20))
 
